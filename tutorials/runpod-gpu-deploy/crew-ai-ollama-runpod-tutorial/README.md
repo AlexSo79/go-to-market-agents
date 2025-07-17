@@ -1,208 +1,169 @@
-![](https://europe-west1-atp-views-tracker.cloudfunctions.net/working-analytics?notebook=tutorials--runpod-gpu-deploy--crew-ai-ollama-runpod-tutorial--readme)
+<p align="center">
+  <a href="https://github.com/mem0ai/mem0">
+    <img src="docs/images/banner-sm.png" width="800px" alt="Mem0 - The Memory Layer for Personalized AI">
+  </a>
+</p>
+<p align="center" style="display: flex; justify-content: center; gap: 20px; align-items: center;">
+  <a href="https://trendshift.io/repositories/11194" target="blank">
+    <img src="https://trendshift.io/api/badge/repositories/11194" alt="mem0ai%2Fmem0 | Trendshift" width="250" height="55"/>
+  </a>
+</p>
 
-# CrewAI + Ollama on RunPod: Serverless AI Agents
+<p align="center">
+  <a href="https://mem0.ai">Learn more</a>
+  ·
+  <a href="https://mem0.dev/DiG">Join Discord</a>
+  ·
+  <a href="https://mem0.dev/demo">Demo</a>
+  ·
+  <a href="https://mem0.dev/openmemory">OpenMemory</a>
+</p>
 
-## Overview
+<p align="center">
+  <a href="https://mem0.dev/DiG">
+    <img src="https://dcbadge.vercel.app/api/server/6PzXDgEjG5?style=flat" alt="Mem0 Discord">
+  </a>
+  <a href="https://pepy.tech/project/mem0ai">
+    <img src="https://img.shields.io/pypi/dm/mem0ai" alt="Mem0 PyPI - Downloads">
+  </a>
+  <a href="https://github.com/mem0ai/mem0">
+    <img src="https://img.shields.io/github/commit-activity/m/mem0ai/mem0?style=flat-square" alt="GitHub commit activity">
+  </a>
+  <a href="https://pypi.org/project/mem0ai" target="blank">
+    <img src="https://img.shields.io/pypi/v/mem0ai?color=%2334D058&label=pypi%20package" alt="Package version">
+  </a>
+  <a href="https://www.npmjs.com/package/mem0ai" target="blank">
+    <img src="https://img.shields.io/npm/v/mem0ai" alt="Npm package">
+  </a>
+  <a href="https://www.ycombinator.com/companies/mem0">
+    <img src="https://img.shields.io/badge/Y%20Combinator-S24-orange?style=flat-square" alt="Y Combinator S24">
+  </a>
+</p>
 
-This repository demonstrates how to deploy an AI agent system on [RunPod](https://get.runpod.io/nirdiamant)'s serverless infrastructure. The sample application creates an API endpoint that generates blog posts on any topic through an AI agent workflow.
+<p align="center">
+  <a href="https://mem0.ai/research"><strong>📄 Building Production-Ready AI Agents with Scalable Long-Term Memory →</strong></a>
+</p>
+<p align="center">
+  <strong>⚡ +26% Accuracy vs. OpenAI Memory • 🚀 91% Faster • 💰 90% Fewer Tokens</strong>
+</p>
 
-Key components:
-- **CrewAI**: Framework for orchestrating role-playing AI agents
-- **Ollama**: Tool for running open-source LLMs locally
-- **RunPod**: Serverless GPU infrastructure for AI deployment
+##  🔥 Research Highlights
+- **+26% Accuracy** over OpenAI Memory on the LOCOMO benchmark
+- **91% Faster Responses** than full-context, ensuring low-latency at scale
+- **90% Lower Token Usage** than full-context, cutting costs without compromise
+- [Read the full paper](https://mem0.ai/research)
 
-*Referenced from: [RunPod Worker Template](https://github.com/runpod-workers/worker-template)*
+# Introduction
 
-## RunPod Template
+[Mem0](https://mem0.ai) ("mem-zero") enhances AI assistants and agents with an intelligent memory layer, enabling personalized AI interactions. It remembers user preferences, adapts to individual needs, and continuously learns over time—ideal for customer support chatbots, AI assistants, and autonomous systems.
 
-Get started immediately using our pre-configured RunPod template:
+### Key Features & Use Cases
 
-[<img src="https://img.shields.io/badge/RunPod-Deploy%20Now-blue?style=for-the-badge&logo=none" alt="Deploy on RunPod" width="200"/>](https://get.runpod.io/nirdiamant)
+**Core Capabilities:**
+- **Multi-Level Memory**: Seamlessly retains User, Session, and Agent state with adaptive personalization
+- **Developer-Friendly**: Intuitive API, cross-platform SDKs, and a fully managed service option
 
-## How It Works
+**Applications:**
+- **AI Assistants**: Consistent, context-rich conversations
+- **Customer Support**: Recall past tickets and user history for tailored help
+- **Healthcare**: Track patient preferences and history for personalized care
+- **Productivity & Gaming**: Adaptive workflows and environments based on user behavior
 
-This application:
-1. Exposes an API endpoint through RunPod
-2. Accepts a topic as input
-3. Uses CrewAI to manage an AI agent that:
-   - Researches the topic (using a mock research tool in this example)
-   - Writes a structured blog post
-4. Returns the generated blog post as JSON
+## 🚀 Quickstart Guide <a name="quickstart"></a>
 
-## Architecture
+Choose between our hosted platform or self-hosted package:
 
-- **Handler Function**: Entry point that processes requests (handler.py)
-- **Blog Writer Agent**: AI agent configured for content creation
-- **Mock Research Tool**: Simulates research by providing predefined facts
-- **Docker Container**: Packages everything with Ollama for serverless deployment
+### Hosted Platform
 
-## Getting Started
+Get up and running in minutes with automatic updates, analytics, and enterprise security.
 
-### Deployment to RunPod
+1. Sign up on [Mem0 Platform](https://app.mem0.ai)
+2. Embed the memory layer via SDK or API keys
 
-#### Option 1: Use RunPod Template (Recommended)
+### Self-Hosted (Open Source)
 
-1. Click the "Deploy on RunPod" button above
-2. Configure your endpoint settings
-3. Deploy and start using immediately
-
-#### Option 2: Build and Deploy Custom Image
-
-1. Build the Docker image:
-   ```bash
-   docker build -t yourusername/crew-ai-ollama:latest . --platform linux/amd64
-   docker push yourusername/crew-ai-ollama:latest
-   ```
-
-2. Create a new Serverless Endpoint on RunPod
-3. Select "Docker Image" as the source
-4. Enter your image URL
-5. Configure hardware settings (recommended: GPU with 24GB+ VRAM)
-6. Set worker count (min: 0, max: based on expected traffic)
-7. Deploy your endpoint
-
-## Usage
-
-### API Endpoint
-
-Once deployed, your RunPod endpoint will provide a URL in this format:
-```
-https://api.runpod.ai/v2/[ENDPOINT_ID]/run
-```
-
-### Example Request
+Install the sdk via pip:
 
 ```bash
-curl --request POST \
-     --url https://api.runpod.ai/v2/[ENDPOINT_ID]/run \
-     --header "accept: application/json" \
-     --header "authorization: [YOUR_API_KEY]" \
-     --header "content-type: application/json" \
-     --data '
-{
-  "input": {
-    "topic": "artificial intelligence"
-  }
-}
-'
+pip install mem0ai
 ```
 
-### Example Response
-
-```json
-{
-  "delayTime": 14836,
-  "executionTime": 10799,
-  "id": "4c04615b-540f-4d82-917d-4eb4256acd96-u1",
-  "output": {
-    "blog_post": "Title: The Future of Technology: A Promising Horizon\n\nIntroduction:\nTechnology has been a driving force behind human progress, constantly evolving to meet the challenges of our time. In recent years, the pace of technological advancements has accelerated, and we stand on the precipice of an exciting new era. This blog post explores the current state of technology, highlights its most promising trends, and looks forward to what's in store for the future.\n\nMain Points:\n1. The Unrelenting Importance of Technology: As per recent research, 82% of industry leaders consider technology a pivotal area of focus, demonstrating its significance in shaping our world. From healthcare and education to communication and entertainment, technology continues to transform our daily lives.\n2. Rising Research Investments: Last year alone, spending on technology-related research grew by an impressive 34%. This surge in investment highlights the growing belief that technological innovation will be a primary catalyst for economic growth and societal progress.\n3. Soaring Consumer Interest: Consumer interest in technology has soared since 2022, with a staggering 56% increase recorded. This rapid growth is a testament to the increasing role of technology in our lives and its ability to address the evolving needs and desires of individuals worldwide.\n4. A Promising Horizon: Experts predict that the next five years will bring significant advancements in technology. From artificial intelligence and quantum computing to breakthroughs in biotechnology, the future promises a world of endless possibilities and new frontiers to explore.\n\nConclusion:\nThe future of technology is undoubtedly bright, with innovation driving us towards a more connected, efficient, and prosperous society. As we forge ahead into this exciting new era, it's crucial that we continue to invest in research, foster collaboration, and embrace the transformative potential of technology. Our collective commitment to harnessing its power will determine the extent to which we can leverage technology to overcome global challenges and shape a better tomorrow for all.\n\nCall to Action:\nJoin the conversation on social media using #FutureOfTech and share your thoughts about how technology is changing our world. Let's engage in a dialogue that fosters understanding, inspiration, and collective action towards an even brighter future.",
-    "status": "success"
-  },
-  "status": "COMPLETED",
-  "workerId": "fy17taoa4pyz2c"
-}
+Install sdk via npm:
+```bash
+npm install mem0ai
 ```
 
-## Key Files
+### Basic Usage
 
-### handler.py
+Mem0 requires an LLM to function, with `gpt-4o-mini` from OpenAI as the default. However, it supports a variety of LLMs; for details, refer to our [Supported LLMs documentation](https://docs.mem0.ai/components/llms/overview).
 
-The main entry point for processing requests:
+First step is to instantiate the memory:
 
 ```python
-import runpod
-from crewai import Agent, Task, Crew, LLM
-from crewai.tools import tool
-import os
+from openai import OpenAI
+from mem0 import Memory
 
-# Configure Ollama LLM
-llm = LLM(model="ollama/openhermes", base_url="http://localhost:11434")
+openai_client = OpenAI()
+memory = Memory()
 
-# Create a pseudo-research tool that returns fake information
-@tool("Research Tool")
-def fake_research(topic: str) -> str:
-    """
-    Pretends to search for information about a topic. 
-    Will always return some fake pre-defined content.
-    """
-    # ... returns fake research data
-    
-# Create blog writer agent
-blog_writer = Agent(
-    role="Blog Writer",
-    goal="Write engaging and informative blog posts on various topics",
-    backstory="You are a professional blog writer...",
-    tools=[fake_research],
-    verbose=True,
-    llm=llm
-)
+def chat_with_memories(message: str, user_id: str = "default_user") -> str:
+    # Retrieve relevant memories
+    relevant_memories = memory.search(query=message, user_id=user_id, limit=3)
+    memories_str = "\n".join(f"- {entry['memory']}" for entry in relevant_memories["results"])
 
-def create_blog_post(topic):
-    """Creates a blog post on the given topic using CrewAI"""
-    # ... creates and executes the task
+    # Generate Assistant response
+    system_prompt = f"You are a helpful AI. Answer the question based on query and memories.\nUser Memories:\n{memories_str}"
+    messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": message}]
+    response = openai_client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+    assistant_response = response.choices[0].message.content
 
-def handler(job):
-    """Handler function that will be used to process jobs."""
-    job_input = job["input"]
-    topic = job_input.get("topic", "technology")
-    
-    try:
-        blog_post = create_blog_post(topic)
-        return {
-            "status": "success",
-            "blog_post": blog_post
-        }
-    except Exception as e:
-        return {
-            "status": "error",
-            "message": str(e)
-        }
+    # Create new memories from the conversation
+    messages.append({"role": "assistant", "content": assistant_response})
+    memory.add(messages, user_id=user_id)
 
-runpod.serverless.start({"handler": handler})
+    return assistant_response
+
+def main():
+    print("Chat with AI (type 'exit' to quit)")
+    while True:
+        user_input = input("You: ").strip()
+        if user_input.lower() == 'exit':
+            print("Goodbye!")
+            break
+        print(f"AI: {chat_with_memories(user_input)}")
+
+if __name__ == "__main__":
+    main()
 ```
 
-### Dockerfile
+For detailed integration steps, see the [Quickstart](https://docs.mem0.ai/quickstart) and [API Reference](https://docs.mem0.ai/api-reference).
 
-Contains the configuration for creating a containerized version of the application:
+## 🔗 Integrations & Demos
 
-```Dockerfile
-FROM runpod/pytorch:2.0.1-py3.10-cuda11.8.0-devel-ubuntu22.04
+- **ChatGPT with Memory**: Personalized chat powered by Mem0 ([Live Demo](https://mem0.dev/demo))
+- **Browser Extension**: Store memories across ChatGPT, Perplexity, and Claude ([Chrome Extension](https://chromewebstore.google.com/detail/onihkkbipkfeijkadecaafbgagkhglop?utm_source=item-share-cb))
+- **Langgraph Support**: Build a customer bot with Langgraph + Mem0 ([Guide](https://docs.mem0.ai/integrations/langgraph))
+- **CrewAI Integration**: Tailor CrewAI outputs with Mem0 ([Example](https://docs.mem0.ai/integrations/crewai))
 
-# Install Python dependencies
-COPY requirements.txt /requirements.txt
-RUN pip install --upgrade pip && \
-    pip install uv && \
-    uv pip install --upgrade -r /requirements.txt --no-cache-dir && \
-    uv pip install "langchain-community>=0.0.34" --no-cache-dir
+## 📚 Documentation & Support
 
-# Download model during build
-RUN ollama serve > /dev/null 2>&1 & \
-    sleep 25 && \
-    ollama pull openhermes && \
-    sleep 10 && \
-    pkill ollama
+- Full docs: https://docs.mem0.ai
+- Community: [Discord](https://mem0.dev/DiG) · [Twitter](https://x.com/mem0ai)
+- Contact: founders@mem0.ai
 
-# Startup script
-CMD ["/start.sh"]
+## Citation
+
+We now have a paper you can cite:
+
+```bibtex
+@article{mem0,
+  title={Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory},
+  author={Chhikara, Prateek and Khant, Dev and Aryan, Saket and Singh, Taranjeet and Yadav, Deshraj},
+  journal={arXiv preprint arXiv:2504.19413},
+  year={2025}
+}
 ```
 
-## Performance Considerations
+## ⚖️ License
 
-- The first request may experience cold-start latency as the container initializes
-- Pre-loading the Ollama model in the Docker image significantly improves response time
-- Response times typically range from 5-15 seconds depending on the complexity of the topic
-
-## Extending This Project
-
-This template can be extended in several ways:
-- Replace the mock research tool with real web search functionality
-- Add more specialized agents for different aspects of content creation
-- Implement more complex workflows with multiple agents collaborating
-- Fine-tune the LLM for your specific use case
-
-## Acknowledgements
-
-- [CrewAI](https://github.com/crewAIInc/crewAI)
-- [Ollama](https://github.com/ollama/ollama)
-- [RunPod](https://get.runpod.io/nirdiamant)
-- [RunPod Worker Template](https://github.com/runpod-workers/worker-template)
+Apache 2.0 — see the [LICENSE](LICENSE) file for details.
